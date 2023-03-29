@@ -28,3 +28,10 @@ func main() {
 	fmt.Println(f)
 	fmt.Println(g)
 }
+
+
+//以下課題4.1
+// func main() {
+// 	c := calc.Calc(2, 4)
+// 	fmt.Println(c)
+// }
