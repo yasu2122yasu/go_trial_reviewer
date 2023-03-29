@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  # trial4
+  cmd:
+    container_name: trial-4
+    build: # ビルドに使うDockerファイルのパス
+      context: .
+      dockerfile: ./build/Dockerfile
+    volumes: # マウント
+      - ./cmd:/usr/local/go/src/trial-4/cmd
+      - .env:/usr/local/go/src/trial-4/cmd/.env
+    tty: true # コンテナの永続化
+    ports:
+      - ${APP_PORT}:8080
