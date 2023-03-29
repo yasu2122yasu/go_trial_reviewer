@@ -13,41 +13,31 @@ func Index(c *gin.Context) {
 	c.HTML(200, "index.html", gin.H{"books": books})
 }
 
-func Show(c *gin.Context) {
-	id, _ := strconv.Atoi(c.Param("id"))
-	book := model.GetOne(id)
-	c.HTML(200, "show.html", gin.H{"book": book})
-}
+// func Show(c *gin.Context) {
+// ここに課題3-1を書いてください。
+// }
 
+// 投稿作成画面を表示するための関数です。
 func GetCreate(c *gin.Context) {
 	c.HTML(200, "create.html", gin.H{})
 }
 
-func PostCreate(c *gin.Context) {
-	title := c.PostForm("title")
-	body := c.PostForm("body")
-	book := model.Book{Title: title, Body: body}
-	book.Create()
-	c.Redirect(301, "/")
-}
+// func PostCreate(c *gin.Context) {
+// ここに課題3-2を書いてください。
+// }
 
+// 編集画面を表示するための関数です。
 func GetEdit(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	book := model.GetOne(id)
 	c.HTML(200, "edit.html", gin.H{"book": book})
 }
 
-func PostEdit(c *gin.Context) {
-	id, _ := strconv.Atoi(c.PostForm("id"))
-	book := model.GetOne(id)
-	title := c.PostForm("title")
-	book.Title = title
-	body := c.PostForm("body")
-	book.Body = body
-	book.Update()
-	c.Redirect(301, "/")
-}
+// func PostEdit(c *gin.Context) {
+// ここに課題3-3を書いてください。
+// }
 
+// 削除画面を表示するための関数です。
 func GetDelete(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	book := model.GetOne(id)
