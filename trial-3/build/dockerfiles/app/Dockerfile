@@ -2,9 +2,9 @@ FROM golang:1.20-alpine3.16
 
 COPY app /go/app/
 
-RUN mkdir -p /usr/local/go/src/web/app
+RUN mkdir -p /usr/local/go/src/trial-3/app
 
-WORKDIR /usr/local/go/src/web/app/
+WORKDIR /usr/local/go/src/trial-3/app/
 
 RUN apk update \
 && apk add --no-cache git \
