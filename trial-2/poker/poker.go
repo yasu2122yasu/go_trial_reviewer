@@ -29,7 +29,7 @@ func CheckInputLength(t string, err string) (string, string) {
 }
 
 // 2. "Q1 S7 H3 H3 Q6"のように同じカードが複数入力されるケース
-func ExDuplicatedCards(cards string, err string) (string, string) {
+func ExDuplicatedCards(cards, err string) (string, string) {
 	str := strings.Join(strings.Fields(cards), "")
 	var dupSlice []string
 

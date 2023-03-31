@@ -19,7 +19,7 @@ func SetUpRouter() *gin.Engine {
 }
 
 func TestTop(t *testing.T) {
-	Response := `{"message":"Welcome to the Tech Company listing API with Golang"}`
+	Response := `{"200":"The Index Method is passed"}`
 	r := SetUpRouter()
 	r.GET("/", Top)
 	req, _ := http.NewRequest("GET", "/", nil)
