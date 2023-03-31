@@ -20,6 +20,7 @@ func SetUpRouter() *gin.Engine {
 
 func TestTop(t *testing.T) {
 	Response := `{"200":"The Index Method is passed"}`
+	// Response := `{"400":"The Index Method is passed"}`
 	r := SetUpRouter()
 	r.GET("/", Top)
 	req, _ := http.NewRequest("GET", "/", nil)
