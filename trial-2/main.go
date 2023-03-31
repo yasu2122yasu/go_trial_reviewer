@@ -8,12 +8,11 @@ import (
 	"reflect"
 	"regexp"
 	"sort"
-	"strconv"
 	"strings"
-	"unicode/utf8"
+
+	"trial-2/poker"
 
 	"github.com/gorilla/mux"
-	"golang.org/x/exp/slices"
 )
 
 //ここから本実装
@@ -44,11 +43,11 @@ func testPass(t string) string {
 	var err string
 
 	//文字列の長さが14でない場合にエラーを返す関数
-	t, err = checkInputLength(t, err)
+	t, err = poker.CheckInputLength(t, err)
 
-	p, err := exDuplicatedCards(t, err)
+	p, err := poker.ExDuplicatedCards(t, err)
 
-	num, err := makeIntSlice(p, err)
+	num, err := poker.MakeIntSlice(p, err)
 
 	u, err := makeStringSlice(p, err)
 
@@ -83,76 +82,78 @@ func main() {
 	log.Fatal(http.ListenAndServe(":8000", r))
 }
 
-func checkInputLength(t string, err string) (string, string) {
-	var b = utf8.RuneCountInString(t)
-	fmt.Printf("%d\n", b)
-	if b != 14 {
-		err = "400(Bad Request): 入力値の長さが異なります"
-	} else {
-		fmt.Println("入力値の長さは正常です。")
-	}
-	return t, err
-}
+// テストのためpokerモジュールに切り出した
+// func checkInputLength(t string, err string) (string, string) {
+// 	var b = utf8.RuneCountInString(t)
+// 	fmt.Printf("%d\n", b)
+// 	if b != 14 {
+// 		err = "400(Bad Request): 入力値の長さが異なります"
+// 	} else {
+// 		fmt.Println("入力値の長さは正常です。")
+// 	}
+// 	return t, err
+// }
 
-func exDuplicatedCards(cards string, err string) (string, string) {
-	str := strings.Join(strings.Fields(cards), "")
-	var dupSlice []string
+// テストのためpokerモジュールに切り出した
+// func exDuplicatedCards(cards string, err string) (string, string) {
+// 	str := strings.Join(strings.Fields(cards), "")
+// 	var dupSlice []string
 
-	// 文字列をQ3,D4,H2のようにカードごとの要素にして配列に格納する。
-	for i := 0; i < len(str); i += 2 {
-		if i+1 < len(str) {
-			dupSlice = append(dupSlice, str[i:i+2])
-		} else {
-			dupSlice = append(dupSlice, str[i:])
-		}
-	}
+// 	// 文字列をQ3,D4,H2のようにカードごとの要素にして配列に格納する。
+// 	for i := 0; i < len(str); i += 2 {
+// 		if i+1 < len(str) {
+// 			dupSlice = append(dupSlice, str[i:i+2])
+// 		} else {
+// 			dupSlice = append(dupSlice, str[i:])
+// 		}
+// 	}
 
-	// 重複を削除する。
-	slices.Sort(dupSlice)
-	unique := slices.Compact(dupSlice)
+// 	// 重複を削除する。
+// 	slices.Sort(dupSlice)
+// 	unique := slices.Compact(dupSlice)
 
-	// 重複を削除した後に、要素数が一致しなければエラーを返す。
-	if len(unique) != 5 {
-		err = "400(Bad Request): 同じカードを複数枚入力しています"
-	} else {
-		fmt.Println("重複するカードはありません。")
-	}
+// 	// 重複を削除した後に、要素数が一致しなければエラーを返す。
+// 	if len(unique) != 5 {
+// 		err = "400(Bad Request): 同じカードを複数枚入力しています"
+// 	} else {
+// 		fmt.Println("重複するカードはありません。")
+// 	}
 
-	return cards, err
-}
+// 	return cards, err
+// }
 
-// 文字列から数字のみを抜き出して数値型のスライスに変換するコード
-func makeIntSlice(cards string, err string) ([]int, string) {
+// テストのためpokerモジュールに切り出した
+// func makeIntSlice(cards string, err string) ([]int, string) {
 
-	r, _ := regexp.Compile("[^0-9| ]")
+// 	r, _ := regexp.Compile("[^0-9| ]")
 
-	q := strings.Split(r.ReplaceAllString(cards, ""), " ")
+// 	q := strings.Split(r.ReplaceAllString(cards, ""), " ")
 
-	s := [5]string{}
-	copy(s[:], q)
+// 	s := [5]string{}
+// 	copy(s[:], q)
 
-	var ab = []int{}
+// 	var ab = []int{}
 
-	for _, i := range q {
-		j, _ := strconv.Atoi(i)
-		if j > 13 {
-			err = "400(Bad Request): 入力されたカードの値が異常です"
-		} else {
-			fmt.Println("正常：入力されたカードの値は13以下です。")
-		}
-		ab = append(ab, j)
-	}
+// 	for _, i := range q {
+// 		j, _ := strconv.Atoi(i)
+// 		if j > 13 {
+// 			err = "400(Bad Request): 入力されたカードの値が異常です"
+// 		} else {
+// 			fmt.Println("正常：入力されたカードの値は13以下です。")
+// 		}
+// 		ab = append(ab, j)
+// 	}
 
-	sort.Ints(ab)
+// 	sort.Ints(ab)
 
-	if len(ab) == 5 {
-		fmt.Println("正常：入力されたカードの数字の数は正常です")
-	} else {
-		err = "400(Bad Request): 入力されたカードの枚数が異常です"
-	}
+// 	if len(ab) == 5 {
+// 		fmt.Println("正常：入力されたカードの数字の数は正常です")
+// 	} else {
+// 		err = "400(Bad Request): 入力されたカードの枚数が異常です"
+// 	}
 
-	return ab, err
-}
+// 	return ab, err
+// }
 
 // 文字列から文字のみを抜き出して文字列型のスライスに変換するコード
 func makeStringSlice(cards string, err string) ([]string, string) {
